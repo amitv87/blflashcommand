@@ -205,7 +205,7 @@ class BaseEflashLoader(object):
             self.cfg = BFConfigParser()
             self.cfg.read(self.config_file)
         else:
-            printf('Config file not found')
+            printf('Config file "' + self.config_file + '" not found')
             self.error_code_print('000B')
             return (False, 0)
         if self.interface == 'openocd':
