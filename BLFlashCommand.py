@@ -221,27 +221,26 @@ class MainClass:
             except Exception:
                 port = sorted(ports)[0]
 
+        parser = argparse.ArgumentParser(description='flash-command')
+        parser.add_argument('--interface', dest='interface', default='uart', help='interface to use')
+        parser.add_argument('--port', dest='port', default=port, help='serial port to use')
+        parser.add_argument('--chipname', dest='chipname', default='BL602', help='chip name')
+        parser.add_argument('--baudrate', dest='baudrate', default=2000000, type=int, help='the speed at which to communicate')
+        parser.add_argument('--config', dest='config', default='', help='run config')
+        parser.add_argument('--cpu_id', dest='cpu_id', default='', help='cpu id')
+        parser.add_argument('--efuse', dest='efuse', default='', help='efuse options')
+        parser.add_argument('--key', dest='key', default='', help='aes key')
+        parser.add_argument('--iv', dest='iv', default='', help='aes iv')
+        parser.add_argument('--pk', dest='pk', help='ecc public key')
+        parser.add_argument('--sk', dest='sk', default='', help='ecc private key')
+        args = parser.parse_args(argv)
+        if args.port:
+            bflb_utils.printf('Serial port is ' + args.port)
         else:
-            parser = argparse.ArgumentParser(description='flash-command')
-            parser.add_argument('--interface', dest='interface', default='uart', help='interface to use')
-            parser.add_argument('--port', dest='port', default=port, help='serial port to use')
-            parser.add_argument('--chipname', dest='chipname', default='BL602', help='chip name')
-            parser.add_argument('--baudrate', dest='baudrate', default=2000000, type=int, help='the speed at which to communicate')
-            parser.add_argument('--config', dest='config', default='', help='run config')
-            parser.add_argument('--cpu_id', dest='cpu_id', default='', help='cpu id')
-            parser.add_argument('--efuse', dest='efuse', default='', help='efuse options')
-            parser.add_argument('--key', dest='key', default='', help='aes key')
-            parser.add_argument('--iv', dest='iv', default='', help='aes iv')
-            parser.add_argument('--pk', dest='pk', help='ecc public key')
-            parser.add_argument('--sk', dest='sk', default='', help='ecc private key')
-            args = parser.parse_args(argv)
-            if args.port:
-                bflb_utils.printf('Serial port is ' + args.port)
+            if port:
+                bflb_utils.printf('Serial port is ' + port)
             else:
-                if port:
-                    bflb_utils.printf('Serial port is ' + port)
-                else:
-                    bflb_utils.printf('Serial port is not found')
+                bflb_utils.printf('Serial port is not found')
         bflb_utils.printf('==================================================')
         config = self.get_value(args)
         if config:
