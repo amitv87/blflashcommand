@@ -31,7 +31,8 @@ class BFConfigParser:
             self.cfg_obj = ConfigObj(self.cfg_infile)
 
     def read(self, file=None):
-        printf('Reading configuration from file: %s' % file)
+        printf('Reading configuration from file:')
+        printf('  %s' % file)
         self.cfg_infile = file
         if file is not None:
             self.cfg_obj = ConfigObj(self.cfg_infile)
