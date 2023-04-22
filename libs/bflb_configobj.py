@@ -17,6 +17,9 @@ class ConfigObj:
     def get(self, section, key):
         return self.config.get(section, key)
 
+    def options(self, section):
+        return self.config.options(section)
+
     def set(self, section, key, value):
         return self.config.set(section, key, value)
 
@@ -46,6 +49,9 @@ class BFConfigParser:
         if ret == '""':
             return ''
         return ret
+
+    def options(self, section):
+        return self.cfg_obj.options(section)
 
     def set(self, section, key, value):
         self.cfg_obj.set(section, key, str(value))
