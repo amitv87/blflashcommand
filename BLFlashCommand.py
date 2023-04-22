@@ -1,13 +1,9 @@
-# uncompyle6 version 3.9.0
+# decompyle3 version 3.9.0
 # Python bytecode version base 3.7.0 (3394)
 # Decompiled from: Python 3.7.16 (default, Mar 30 2023, 01:25:49) 
 # [GCC 12.2.1 20220924]
 # Embedded file name: BLFlashCommand.py
-"""
-Created on 20221216
-
-@author: Dillon
-"""
+__doc__ = '\nCreated on 20221216\n\n@author: Dillon\n'
 import os, re, sys, argparse, binascii, threading, configparser
 from libs import bflb_utils
 from libs.bflb_utils import get_serial_ports
@@ -42,16 +38,16 @@ class MainClass:
 
     def __init__(self):
         self.dict_chip = {
-         'BL602': ('bl602', 'bl602'), 
-         'BL702': ('bl702', 'bl702'), 
-         'BL702L': ('bl702l', 'bl702l'), 
-         'BL808': ('bl808', 'bl808'), 
-         'BL606P': ('bl606p', 'bl808'), 
-         'BL616': ('bl616', 'bl616')}
+          'BL602': ('bl602', 'bl602'),
+          'BL702': ('bl702', 'bl702'),
+          'BL702L': ('bl702l', 'bl702l'),
+          'BL808': ('bl808', 'bl808'),
+          'BL606P': ('bl606p', 'bl808'),
+          'BL616': ('bl616', 'bl616')}
 
     def get_addr_from_partition_by_name(self, name, parition_file, index):
         try:
-            with open(parition_file, 'rb') as (fp):
+            with open(parition_file, 'rb') as fp:
                 data = bytearray(fp.read())
                 fp.close()
                 start = data.find(name.encode('utf-8'))
@@ -59,7 +55,8 @@ class MainClass:
                     addr = data[start + 9 + index * 4:start + 9 + 4 + index * 4]
                     addr.reverse()
                     addr = hex(int(binascii.hexlify(addr), 16))
-                    return (True, addr)
+                    return (
+                     True, addr)
                 print(data)
                 print(name.encode('utf-8'))
                 return (False, '0')
@@ -117,6 +114,11 @@ class MainClass:
                             self.erase = config.get('cfg', 'erase', fallback=1)
                             self.skip_mode = config.get('cfg', 'skip_mode', fallback='0x0, 0x0')
                             self.boot2_isp_mode = config.get('cfg', 'boot2_isp_mode', fallback=0)
+                        else:
+                            filedir = config.get(item, 'filedir')
+                            address = config.get(item, 'address')
+                        if not self.get_value_file(item, filedir, address, args.cpu_id):
+                            return False
 
             except Exception as e:
                 try:
@@ -217,7 +219,8 @@ class MainClass:
 
         if ports:
             try:
-                port = sorted(ports, key=(lambda x: int(re.match('COM(\\d+)', x).group(1))))[0]
+                port = sorted(ports, key=(lambda x: int(re.match('COM(\\d+)', x).group(1))
+))[0]
             except Exception:
                 port = sorted(ports)[0]
 
