@@ -1228,6 +1228,8 @@ class BaseEflashLoader(object):
         cfg_dir = app_path + '/utils/flash/' + self.chip_type + '/'
         conf_name = self.get_suitable_conf_name(cfg_dir, flash_id)
         if os.path.isfile(cfg_dir + conf_name) is False:
+            printf('ERROR: Could not find flash configuration for chip')
+            printf('File must be at: %s' % cfg_dir + conf_name)
             return False
         return True
 
