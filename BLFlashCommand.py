@@ -117,8 +117,8 @@ class MainClass:
                         else:
                             filedir = config.get(item, 'filedir')
                             address = config.get(item, 'address')
-                        if not self.get_value_file(item, filedir, address, args.cpu_id):
-                            return False
+                            if not self.get_value_file(item, filedir, address, args.cpu_id):
+                                return False
 
             except Exception as e:
                 try:
