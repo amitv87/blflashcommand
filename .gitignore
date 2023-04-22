@@ -1,8 +1,7 @@
 __pycache__
-bin/
-lib/
-lib64
+env/
 pyvenv.cfg
 log/
 *.bin
 *.ini
+whole_img.pack
